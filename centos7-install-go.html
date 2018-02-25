@@ -1,0 +1,354 @@
+<!DOCTYPE html><html><head><title>CentOS7安装与配置Go</title><meta charset='utf-8'><link href='https://dn-maxiang.qbox.me/res-min/themes/marxico.css' rel='stylesheet'><style>
+.note-content  {font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", STHeiti, "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, Song, sans-serif;}
+
+</style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+
+
+
+<h1 id="centos7安装与配置go">CentOS7安装与配置Go</h1>
+
+
+
+<h1 id="1下载并解压">1.下载并解压</h1>
+
+<ul><li>下载（需要国外VPN）</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># pwd</span>
+</div><div class="hljs-line">/opt
+</div><div class="hljs-line"><span class="hljs-comment"># 1.9.2版本</span>
+</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 或1.8.3版本</span>
+</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://storage.googleapis.com/golang/go1.8.3.linux-amd64.tar.gz</span>
+</div></code></pre>
+
+<ul><li>解压 <br>
+将压缩包解压后直接放到 /opt/go 目录下，不用再次 make &amp;&amp; make install 来安装了，开箱即用。</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># tar -zxvf go1.9.2.linux-amd64.tar.gz -C /opt/go</span>
+</div></code></pre>
+
+<blockquote>
+  <p>注：Go以源码包安装的方式，默认是安装在/usr/local/go目录下的。</p>
+</blockquote>
+
+
+
+<h1 id="2添加系统环境变量">2.添加系统环境变量</h1>
+
+
+
+<h2 id="方法一最佳实践">方法一（最佳实践）</h2>
+
+<ul><li>创建新文件并打开</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># vi /etc/profile.d/go.sh</span>
+</div></code></pre>
+
+<ul><li>输入以下内容并保存</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 输入内容</span>
+</div><div class="hljs-line"><span class="hljs-comment"># go</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.9.2
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$GOROOT</span>/bin
+</div><div class="hljs-line"><span class="hljs-comment"># 或直接</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.9.2/bin
+</div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
+</div><div class="hljs-line">:wq!
+</div></code></pre>
+
+<ul><li>立即生效环境变量</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># source /etc/profile.d/go.sh</span>
+</div></code></pre>
+
+<ul><li>自动化脚本</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">$ rm -rf /etc/profile.d/go.sh
+</div><div class="hljs-line">$ touch /etc/profile.d/go.sh
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'# go'</span> &gt; /etc/profile.d/go.sh
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOROOT=/opt/go/go-1.9.2'</span> &gt; /etc/profile.d/go.sh
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export PATH=$PATH:$GOROOT/bin'</span> &gt; /etc/profile.d/go.sh
+</div></code></pre>
+
+<h2 id="方法二">方法二</h2>
+
+<ul><li>修改系统环境变量或用户环境变量配置文件</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 系统环境变量配置文件</span>
+</div><div class="hljs-line">$ vi /etc/profile
+</div><div class="hljs-line"><span class="hljs-comment"># 用户环境变量配置文件</span>
+</div><div class="hljs-line">$ vi ~/.bash_profile
+</div><div class="hljs-line">或
+</div><div class="hljs-line">$ vi ~/.bashrc
+</div></code></pre>
+
+<ul><li>输入以下内容并保存</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 输入内容</span>
+</div><div class="hljs-line"><span class="hljs-comment"># go</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.9.2
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$GOROOT</span>/bin
+</div><div class="hljs-line"><span class="hljs-comment"># 或直接</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.9.2/bin
+</div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
+</div><div class="hljs-line">:wq!
+</div></code></pre>
+
+<ul><li>立即生效环境变量</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># source /etc/profile</span>
+</div></code></pre>
+
+
+
+<h2 id="方法三临时方法">方法三（临时方法）</h2>
+
+<p>直接在shell中输入以下内容:</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.9.2/bin
+</div></code></pre>
+
+<p>现在好了，你可以在shell的任何位置输入 go 命令了！</p>
+
+
+
+<h1 id="3添加gopath目录">3.添加GOPATH目录</h1>
+
+<blockquote>
+  <p>添加GOPATH和添加PATH环境变量没有本质的区别，就是3作用不一样罢了，GOPATH是用户的工作目录。</p>
+</blockquote>
+
+
+
+<h2 id="31-创建工作路径">3.1 创建工作路径</h2>
+
+<blockquote>
+  <p>创建一个工作目录，这个目录就是你以后开发学习go语言的主要战场了，如在用户家目录创建这样一个目录 workspace/go</p>
+</blockquote>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># mkdir -p ~/workspace/go</span>
+</div></code></pre>
+
+
+
+<h2 id="32-添加这个目录路径作为gopath">3.2 添加这个目录路径作为GOPATH</h2>
+
+<h3 id="方法一最佳实践-1">方法一（最佳实践）</h3>
+
+<ul><li>创建一个环境变量文件 gopath.sh 并打开</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># vi /etc/profile.d/gopath.sh</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 输入GOPATH具体指向位置</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 推荐</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOPATH=~/workspace/go
+</div><div class="hljs-line"><span class="hljs-comment"># 或</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOPATH=/root/workspace/go
+</div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
+</div><div class="hljs-line">:wq!
+</div></code></pre>
+
+<ul><li>立即生效这个GOPATH环境变量</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># source /etc/profile.d/gopath.sh</span>
+</div></code></pre>
+
+<ul><li>自动化脚本</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">$ rm -rf /etc/profile.d/gopath.sh
+</div><div class="hljs-line">$ touch /etc/profile.d/gopath.sh
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOPATH=~/workspace/go'</span> &gt; /etc/profile.d/gopath.sh
+</div><div class="hljs-line">或
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOPATH=/root/workspace/go'</span> &gt; /etc/profile.d/gopath.sh
+</div></code></pre>
+
+<h3 id="方法二-1">方法二</h3>
+
+<ul><li>修改系统变量或用户变量配置文件</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 系统环境变量配置文件</span>
+</div><div class="hljs-line">$ vi /etc/profile
+</div><div class="hljs-line"><span class="hljs-comment"># 用户环境变量配置文件</span>
+</div><div class="hljs-line">$ vi ~/.bash_profile
+</div><div class="hljs-line">或
+</div><div class="hljs-line">$ vi ~/.bashrc
+</div></code></pre>
+
+<ul><li>输入以下内容并保存</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 输入GOPATH具体指向位置</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 推荐</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOPATH=~/workspace/go
+</div><div class="hljs-line"><span class="hljs-comment"># 或</span>
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOPATH=/root/workspace/go
+</div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
+</div><div class="hljs-line">:wq!
+</div></code></pre>
+
+<ul><li>立即生效环境变量</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># source /etc/profile</span>
+</div></code></pre>
+
+<h2 id="33-验证gopath环境变量是否添加成功">3.3 验证GOPATH环境变量是否添加成功</h2>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># echo $GOPATH</span>
+</div><div class="hljs-line">/root/workspace/go
+</div></code></pre>
+
+<p>或</p>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># go env</span>
+</div><div class="hljs-line">GOARCH=<span class="hljs-string">"amd64"</span>
+</div><div class="hljs-line">GOBIN=<span class="hljs-string">""</span>
+</div><div class="hljs-line">GOEXE=<span class="hljs-string">""</span>
+</div><div class="hljs-line">GOHOSTARCH=<span class="hljs-string">"amd64"</span>
+</div><div class="hljs-line">GOHOSTOS=<span class="hljs-string">"linux"</span>
+</div><div class="hljs-line">GOOS=<span class="hljs-string">"linux"</span>
+</div><div class="hljs-line">GOPATH=<span class="hljs-string">"/root/workspace/go"</span>
+</div><div class="hljs-line">GORACE=<span class="hljs-string">""</span>
+</div><div class="hljs-line">GOROOT=<span class="hljs-string">"/opt/go/go-1.9.2"</span>
+</div><div class="hljs-line">GOTOOLDIR=<span class="hljs-string">"/opt/go/go-1.9.2/pkg/tool/linux_amd64"</span>
+</div></code></pre>
+
+<p>OK，那么这个GOPATH环境变量也就添加完成了。</p>
+
+
+
+<h1 id="4自动化脚本">4.自动化脚本</h1>
+
+<ul><li>install-and-setup-go.sh</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-meta">#!/bin/bash
+</span></div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># /etc/profile.d目录</span>
+</div><div class="hljs-line">ETC_PROFILE_D=<span class="hljs-string">'/etc/profile.d'</span>
+</div><div class="hljs-line"><span class="hljs-built_in">echo</span> <span class="hljs-string">"ETC_PROFILE_D=<span class="hljs-variable">$ETC_PROFILE_D</span>"</span>
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># go.sh文件路径</span>
+</div><div class="hljs-line">GO_ENV_FILE=<span class="hljs-string">"<span class="hljs-variable">$ETC_PROFILE_D</span>/go.sh"</span>
+</div><div class="hljs-line"><span class="hljs-built_in">echo</span> <span class="hljs-string">"GO_ENV_FILE=<span class="hljs-variable">$GO_ENV_FILE</span>"</span>
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># gopath文件路径</span>
+</div><div class="hljs-line">GOPATH_ENV_FILE=<span class="hljs-string">"<span class="hljs-variable">$ETC_PROFILE_D</span>/gopath.sh"</span>
+</div><div class="hljs-line"><span class="hljs-built_in">echo</span> <span class="hljs-string">"GOPATH_ENV_FILE=<span class="hljs-variable">$GOPATH_ENV_FILE</span>"</span>
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># 创建go环境变量文件</span>
+</div><div class="hljs-line"><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">createGoEnv</span></span>() {
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">"创建go环境变量文件：<span class="hljs-variable">$1</span>"</span>
+</div><div class="hljs-line">        rm -rf <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        touch <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'#!/bin/bash'</span> &gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">''</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'# go'</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOROOT=/opt/go/go-1.9.2'</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'export PATH=$PATH:$GOROOT/bin'</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">''</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">}
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># 创建gopath环境变量文件</span>
+</div><div class="hljs-line"><span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">createGopathEnv</span></span>() {
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">"创建gopath环境变量文件：<span class="hljs-variable">$1</span>"</span>
+</div><div class="hljs-line">        rm -rf <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        touch <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'#!/bin/bash'</span> &gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">''</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'# gopath'</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOPATH=~/workspace/go'</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">        <span class="hljs-built_in">echo</span> <span class="hljs-string">''</span> &gt;&gt; <span class="hljs-variable">$1</span>
+</div><div class="hljs-line">}
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-comment"># 执行脚本</span>
+</div><div class="hljs-line">createGoEnv <span class="hljs-variable">$GO_ENV_FILE</span>
+</div><div class="hljs-line"><span class="hljs-built_in">source</span> <span class="hljs-variable">$GO_ENV_FILE</span>
+</div><div class="hljs-line">
+</div><div class="hljs-line">createGopathEnv <span class="hljs-variable">$GOPATH_ENV_FILE</span>
+</div><div class="hljs-line"><span class="hljs-built_in">source</span> <span class="hljs-variable">$GOPATH_ENV_FILE</span>
+</div></code></pre>
+
+<h1 id="5测试go开发环境">5.测试Go开发环境</h1>
+
+<ul><li>创建测试文件 helloworld.go</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@localhost ~]<span class="hljs-comment"># vi ~/workspace/go/src/HelloApp/helloworld.go</span>
+</div></code></pre>
+
+<ul><li>编辑文件</li>
+</ul>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-go hljs"><div class="hljs-line"><span class="hljs-keyword">package</span> main
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-keyword">import</span> (
+</div><div class="hljs-line">    <span class="hljs-string">"fmt"</span>
+</div><div class="hljs-line">)
+</div><div class="hljs-line">
+</div><div class="hljs-line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+</div><div class="hljs-line">    fmt.Println( <span class="hljs-string">"Hello World!"</span> )
+</div><div class="hljs-line">}
+</div></code></pre>
+
+<ul><li>运行测试代码 helloworld.go</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-go hljs"><div class="hljs-line">[root@devops-vm<span class="hljs-number">-0</span> <span class="hljs-keyword">go</span>]# <span class="hljs-keyword">go</span> run src/HelloApp/helloworld.<span class="hljs-keyword">go</span> 
+</div><div class="hljs-line">Hello World!
+</div></code></pre>
+
+<ul><li>编译安装应用HelloApp</li>
+</ul>
+
+<pre class="prettyprint hljs-dark"><code class="language-go hljs"><div class="hljs-line">[root@devops-vm<span class="hljs-number">-0</span> <span class="hljs-keyword">go</span>]# <span class="hljs-keyword">go</span> install HelloApp
+</div><div class="hljs-line">[root@devops-vm<span class="hljs-number">-0</span> <span class="hljs-keyword">go</span>]# cd bin
+</div><div class="hljs-line">[root@devops-vm<span class="hljs-number">-0</span> <span class="hljs-keyword">go</span>]# ./HelloApp
+</div><div class="hljs-line">Hello World!
+</div></code></pre></div></body></html>
