@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><title>CentOS7安装与配置Tomcat</title><meta charset='utf-8'><link href='https://dn-maxiang.qbox.me/res-min/themes/marxico.css' rel='stylesheet'><style>
+.note-content  {font-family: "Helvetica Neue", Arial, "Hiragino Sans GB", STHeiti, "Microsoft YaHei", "WenQuanYi Micro Hei", SimSun, Song, sans-serif;}
+
+</style></head><body><div id='preview-contents' class='note-content'>
+                        
+                    
+
+
+
+<h1 id="centos7安装与配置tomcat">CentOS7安装与配置Tomcat</h1>
+
+
+
+<h2 id="前置条件">前置条件</h2>
+
+<blockquote>
+  <p>JDK已安装完成，并配置环境变量。 <br>
+  JAVA_HOME=/opt/java/jdk1.8.0_162 <br>
+  JRE_HOME=/opt/java/jdk1.8.0_162/jre <br>
+  CLASSPATH=.:%JAVA_HOME%/lib/dt.jar:%JAVA_HOME%/lib/tools.jar:JRE_HOME/lib <br>
+  PATH=$PATH:%JAVA_HOME%/bin</p>
+</blockquote>
+
+<h2 id="下载tomcat">下载tomcat</h2>
+
+
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># mkdir -p /opt/tomcat</span>
+</div><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># cd /opt/tomcat</span>
+</div><div class="hljs-line">[root@devops-vm-0 tomcat]<span class="hljs-comment"># wget http://mirrors.shu.edu.cn/apache/tomcat/tomcat-9/v9.0.6/bin/apache-tomcat-9.0.6.tar.gz</span>
+</div><div class="hljs-line">...
+</div><div class="hljs-line">[root@devops-vm-0 tomcat]<span class="hljs-comment"># tar -zxvf apache-tomcat-9.0.6.tar.gz</span>
+</div></code></pre>
+
+<h2 id="启动tomcat">启动tomcat</h2>
+
+<p>进入tomcat的bin目录，执行<strong><em>./startup.sh</em></strong>命令即可。</p>
+
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 tomcat]<span class="hljs-comment"># cd /opt/tomcat/apache-tomcat-9.0.6/bin</span>
+</div><div class="hljs-line">[root@devops-vm-0 bin]<span class="hljs-comment"># ./startup.sh </span>
+</div><div class="hljs-line">Using CATALINA_BASE:   /opt/tomcat/apache-tomcat-9.0.6
+</div><div class="hljs-line">Using CATALINA_HOME:   /opt/tomcat/apache-tomcat-9.0.6
+</div><div class="hljs-line">Using CATALINA_TMPDIR: /opt/tomcat/apache-tomcat-9.0.6/temp
+</div><div class="hljs-line">Using JRE_HOME:        /opt/java/jdk1.8.0_162/jre
+</div><div class="hljs-line">Using CLASSPATH:       /opt/tomcat/apache-tomcat-9.0.6/bin/bootstrap.jar:/opt/tomcat/apache-tomcat-9.0.6/bin/tomcat-juli.jar
+</div><div class="hljs-line">Tomcat started.
+</div><div class="hljs-line">[root@devops-vm-0 bin]<span class="hljs-comment"># </span>
+</div></code></pre></div></body></html>
