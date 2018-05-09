@@ -23,11 +23,11 @@
 
 
 
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 下载1.10版本</span>
-</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://dl.google.com/go/go1.10.linux-amd64.tar.gz</span>
-</div><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># cd /opt</span>
-</div><div class="hljs-line"><span class="hljs-comment"># 或1.9.4版本</span>
-</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://dl.google.com/go/go1.9.4.linux-amd64.tar.gz</span>
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># cd /opt</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 下载1.10.2版本</span>
+</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz</span>
+</div><div class="hljs-line"><span class="hljs-comment"># 或1.9.6版本</span>
+</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://dl.google.com/go/go1.9.6.linux-amd64.tar.gz</span>
 </div><div class="hljs-line"><span class="hljs-comment"># 或1.8.3版本</span>
 </div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># wget -c https://dl.google.com/go/go1.8.3.linux-amd64.tar.gz</span>
 </div></code></pre>
@@ -36,18 +36,19 @@
 将压缩包解压后直接放到 /opt/go 目录下，不用再次 make &amp;&amp; make install 来安装了，开箱即用。</li>
 </ul>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># tar -zxvf go1.10.linux-amd64.tar.gz -C /opt/go</span>
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># tar -zxvf go1.10.2.linux-amd64.tar.gz -C /opt/go</span>
 </div><div class="hljs-line">或
-</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># tar -C /usr/local -xzvf go1.10.linux-amd64.tar.gz</span>
+</div><div class="hljs-line">[root@devops-vm-0 opt]<span class="hljs-comment"># tar -C /usr/local -xzvf go1.10.2.linux-amd64.tar.gz</span>
 </div></code></pre>
 
 <blockquote>
   <p>注：Go以源码包安装的方式，Linux默认是安装在/usr/local/go目录下的； Windows操作系统默认是安装在c:\go目录下的。</p>
+  
+  <ul><li>Windows下载包地址： <br>
+  <a href="https://dl.google.com/go/go1.10.2.windows-amd64.zip" target="_blank">https://dl.google.com/go/go1.10.2.windows-amd64.zip</a> <br>
+  <a href="https://dl.google.com/go/go1.9.6.windows-amd64.zip" target="_blank">https://dl.google.com/go/go1.9.6.windows-amd64.zip</a></li>
+  </ul>
 </blockquote>
-
-
 
 <h1 id="2添加系统环境变量">2.添加系统环境变量</h1>
 
@@ -70,10 +71,10 @@
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 输入内容</span>
 </div><div class="hljs-line"><span class="hljs-comment"># go</span>
-</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.10
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.10.2
 </div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$GOROOT</span>/bin
 </div><div class="hljs-line"><span class="hljs-comment"># 或直接</span>
-</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10/bin
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10.2/bin
 </div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
 </div><div class="hljs-line">:wq!
 </div></code></pre>
@@ -94,7 +95,7 @@
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">$ rm -rf /etc/profile.d/go.sh
 </div><div class="hljs-line">$ touch /etc/profile.d/go.sh
 </div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'# go'</span> &gt; /etc/profile.d/go.sh
-</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOROOT=/opt/go/go-1.10'</span> &gt; /etc/profile.d/go.sh
+</div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export GOROOT=/opt/go/go-1.10.2'</span> &gt; /etc/profile.d/go.sh
 </div><div class="hljs-line">$ <span class="hljs-built_in">echo</span> <span class="hljs-string">'export PATH=$PATH:$GOROOT/bin'</span> &gt; /etc/profile.d/go.sh
 </div></code></pre>
 
@@ -124,10 +125,10 @@
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># 输入内容</span>
 </div><div class="hljs-line"><span class="hljs-comment"># go</span>
-</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.10
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> GOROOT=/opt/go/go-1.10.2
 </div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$GOROOT</span>/bin
 </div><div class="hljs-line"><span class="hljs-comment"># 或直接</span>
-</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10/bin
+</div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10.2/bin
 </div><div class="hljs-line">或
 </div><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/usr/<span class="hljs-built_in">local</span>/go/bin
 </div><div class="hljs-line"><span class="hljs-comment"># 保存退出</span>
@@ -150,7 +151,7 @@
 
 
 
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10/bin
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:/opt/go/go-1.10.2/bin
 </div></code></pre>
 
 <p>现在好了，你可以在shell的任何位置输入 go 命令了！</p>
@@ -160,10 +161,8 @@
 <h1 id="3添加gopath目录">3.添加GOPATH目录</h1>
 
 <blockquote>
-  <p>添加GOPATH和添加PATH环境变量没有本质的区别，就是3作用不一样罢了，GOPATH是用户的工作目录。</p>
+  <p>添加GOPATH和添加PATH环境变量没有本质的区别，就是作用不一样罢了，GOPATH是用户的工作目录。</p>
 </blockquote>
-
-
 
 <h2 id="31-创建工作路径">3.1 创建工作路径</h2>
 
@@ -283,13 +282,11 @@
 </div><div class="hljs-line">GOOS=<span class="hljs-string">"linux"</span>
 </div><div class="hljs-line">GOPATH=<span class="hljs-string">"/root/workspace/go"</span>
 </div><div class="hljs-line">GORACE=<span class="hljs-string">""</span>
-</div><div class="hljs-line">GOROOT=<span class="hljs-string">"/opt/go/go-1.10"</span>
-</div><div class="hljs-line">GOTOOLDIR=<span class="hljs-string">"/opt/go/go-1.10/pkg/tool/linux_amd64"</span>
+</div><div class="hljs-line">GOROOT=<span class="hljs-string">"/opt/go/go-1.10.2"</span>
+</div><div class="hljs-line">GOTOOLDIR=<span class="hljs-string">"/opt/go/go-1.10.2/pkg/tool/linux_amd64"</span>
 </div></code></pre>
 
 <p>OK，那么这个GOPATH环境变量也就添加完成了。</p>
-
-
 
 <h1 id="4自动化脚本">4.自动化脚本</h1>
 
@@ -349,6 +346,8 @@
 </div><div class="hljs-line"><wbr>
 </div><div class="hljs-line"><span class="hljs-built_in">source</span> /etc/profile
 </div></code></pre>
+
+
 
 <h1 id="5测试go开发环境">5.测试Go开发环境</h1>
 
