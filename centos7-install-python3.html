@@ -14,6 +14,8 @@
 
 <h1 id="centos7安装与配置python3">CentOS7安装与配置Python3</h1>
 
+
+
 <h1 id="1-查看是否已经安装python">1. 查看是否已经安装Python</h1>
 
 <p>Centos7默认安装了python2.7.5 因为一些命令要用它，比如yum，它使用的是python2.7.5。 <br>
@@ -68,46 +70,41 @@
   <p><a href="https://www.python.org/downloads/source/" target="_blank">https://www.python.org/downloads/source/</a></p>
 </blockquote>
 
-<p>下载tgz包就可以了。其实下面的2个包其一都可以使用</p>
+<p>下载tgz包就可以了。其实下面的2个源码包其一都可以使用</p>
 
 <blockquote>
-  <p>Python-3.6.4.tgz （这个不是编译过的东西，不能解压之后直接使用） <br>
-  Python-3.6.4.tar.xz (这个是pthon的源码)</p>
+  <p>Python-3.6.5.tgz <br>
+  <a href="https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz" target="_blank">https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz</a> <br>
+  Python-3.6.5.tar.xz <br>
+  <a href="https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz" target="_blank">https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tar.xz</a></p>
 </blockquote>
 
 <p>将下载的tgz包上传到Linux服务器。 <br>
 或者执行wget命令直接下载到服务器：</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">wget https://www.python.org/ftp/python/3.6.5/Python-3.6.5.tgz
 </div></code></pre>
 
 <p>解压缩：</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">tar -zxvf Python-3.6.4.tgz
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">tar -zxvf Python-3.6.5.tgz
 </div></code></pre>
 
-<p>解压缩之后，该目录下出现Python-3.6.4文件夹，进入到文件夹下执行编译安装。</p>
+<p>解压缩之后，该目录下出现Python-3.6.5文件夹，进入到文件夹下执行编译安装。</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 src]<span class="hljs-comment"># cd Python-3.6.4</span>
-</div><div class="hljs-line">[root@devops-vm-0 Python-3.6.4]<span class="hljs-comment"># pwd</span>
-</div><div class="hljs-line">/usr/<span class="hljs-built_in">local</span>/src/Python-3.6.4
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 src]<span class="hljs-comment"># cd Python-3.6.5</span>
+</div><div class="hljs-line">[root@devops-vm-0 Python-3.6.5]<span class="hljs-comment"># pwd</span>
+</div><div class="hljs-line">/usr/<span class="hljs-built_in">local</span>/src/Python-3.6.5
 </div></code></pre>
 
 <p>执行命令</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">./configure --prefix=/usr/<span class="hljs-built_in">local</span>/python/python3
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">./configure --prefix=/usr/<span class="hljs-built_in">local</span>/python/python3.6.5
+</div><div class="hljs-line">make
+</div><div class="hljs-line">make install
 </div></code></pre>
 
-<p>./configure命令执行完毕之后创建一个文件creating Makefile，供下面的make命令使用。 <br>
-执行make install之后就会把程序安装到我们指定的目录中去。</p>
+<p>./configure命令执行完毕之后创建一个文件creating Makefile，供下面的make命令使用。执行make install之后就会把程序安装到我们指定的目录中去。</p>
 
 <blockquote>
   <p>Configure是一个可执行脚本，它有很多选项，在待安装的源码路径下使用命令./configure –help输出详细的选项列表。 <br>
@@ -124,41 +121,41 @@
 
 <p>然后执行make、make install命令。</p>
 
-
-
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">make &amp; make install
 </div></code></pre>
 
-<p>安装成功之后进入到python3文件夹可以看到Python的可执行文件目录、lib目录等相关目录。</p>
+<p>安装成功之后进入到python3.6.5文件夹可以看到Python的可执行文件目录、lib目录等相关目录。</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 python]<span class="hljs-comment"># cd python3/</span>
-</div><div class="hljs-line">[root@devops-vm-0 python3]<span class="hljs-comment"># ls</span>
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 python]<span class="hljs-comment"># cd python3.6.5/</span>
+</div><div class="hljs-line">[root@devops-vm-0 python3.6.5]<span class="hljs-comment"># ls</span>
 </div><div class="hljs-line">bin  include  lib  share
 </div></code></pre>
 
 <p>执行</p>
 
-
-
-<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">ln <span class="hljs-_">-s</span> /usr/<span class="hljs-built_in">local</span>/python/python3/bin/python3 /usr/bin/python
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line"><span class="hljs-comment"># python3.6.5软链接指向python3.6.5的实际文件</span>
+</div><div class="hljs-line">ln <span class="hljs-_">-s</span> /usr/<span class="hljs-built_in">local</span>/python/python3.6.5/bin/python3 /usr/bin/python3.6.5
+</div><div class="hljs-line"><span class="hljs-comment"># python3.6软链接指向python3.6.5软链接</span>
+</div><div class="hljs-line">ln <span class="hljs-_">-s</span> /usr/bin/python3.6.5 /usr/bin/python3.6
+</div><div class="hljs-line"><span class="hljs-comment"># python3软链接指向python3.6软链接</span>
+</div><div class="hljs-line">ln <span class="hljs-_">-s</span> /usr/bin/python3.6 /usr/bin/python3
+</div><div class="hljs-line"><span class="hljs-comment"># python软链接指向python3软链接</span>
+</div><div class="hljs-line">ln <span class="hljs-_">-s</span> /usr/bin/python3 /usr/bin/python
 </div></code></pre>
 
 <p>命令创建软连接。</p>
 
-
-
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 bin]<span class="hljs-comment"># ll -a python*</span>
-</div><div class="hljs-line">python -&gt; /usr/<span class="hljs-built_in">local</span>/python/python3/bin/python3
+</div><div class="hljs-line">python.bak -&gt; python2
 </div><div class="hljs-line">python2 -&gt; python2.7
 </div><div class="hljs-line">python2.7
-</div><div class="hljs-line">python.bak -&gt; python2
+</div><div class="hljs-line">python -&gt; /usr/bin/python3
+</div><div class="hljs-line">python3 -&gt; /usr/bin/python3.6
+</div><div class="hljs-line">python3.6 -&gt; /usr/bin/python3.6.5
+</div><div class="hljs-line">python3.6.5 -&gt; /usr/<span class="hljs-built_in">local</span>/python/python3.6.5/bin/python3
 </div></code></pre>
 
 <p>执行</p>
-
-
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">python -V
 </div></code></pre>
@@ -168,32 +165,28 @@
 
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 bin]<span class="hljs-comment"># python -V</span>
-</div><div class="hljs-line">Python 3.6.4
+</div><div class="hljs-line">Python 3.6.5
 </div></code></pre>
 
 <p>安装成功。</p>
 
-
-
 <h1 id="3-修改yum配置文件">3. 修改yum配置文件</h1>
 
-<p>因为yum使用python2，因此替换为python3后可能无法正常工作，继续使用这个python2.7.5，因此修改yum配置文件(vi /usr/bin/yum)。把文件头部的#!/usr/bin/python改成#!/usr/bin/python2.7保存退出即可。</p>
-
-
+<p>因为yum使用python2，因此替换为python3后可能无法正常工作，继续使用这个python2.7.5，因此修改yum配置文件(vi /usr/bin/yum)。把文件头部的#!/usr/bin/python改成#!/usr/bin/python2.7或#!/usr/bin/python2保存退出即可。</p>
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 bin]<span class="hljs-comment"># vi /usr/bin/yum</span>
 </div><div class="hljs-line">将文件第一行的
 </div><div class="hljs-line"><span class="hljs-comment">#!/usr/bin/python</span>
 </div><div class="hljs-line">改为
 </div><div class="hljs-line"><span class="hljs-comment">#!/usr/bin/python2.7</span>
+</div><div class="hljs-line">或
+</div><div class="hljs-line"><span class="hljs-comment">#!/usr/bin/python2</span>
 </div></code></pre>
 
 <ul><li>Centos中Python升级为3.X时yum出现except OSError, e: ^ SyntaxError: invalid syntax问题</li>
 </ul>
 
-<p>CentOS 7升级Python到3.6.4后，需要在/usr/bin/python创建了一个指向Python3的软连接，然后将/usr/bin/yum的顶部的：#!/usr/bin/python改成了#!/usr/bin/python2.7后，运行yum，还是出现了以下错误：</p>
-
-
+<p>CentOS 7升级Python到3.6.5后，需要在/usr/bin/python创建了一个指向Python3的软连接，然后将/usr/bin/yum的顶部的：#!/usr/bin/python改成了#!/usr/bin/python2.7后，运行yum，还是出现了以下错误：</p>
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@master ~]<span class="hljs-comment"># yum -y groupinstall “X Window System”</span>
 </div><div class="hljs-line"> File <span class="hljs-string">"/usr/libexec/urlgrabber-ext-down"</span>, line 28
@@ -202,9 +195,7 @@
 </div><div class="hljs-line">SyntaxError: invalid syntax
 </div></code></pre>
 
-<p>解决方案：urlgrabber-ext-down文件将/usr/bin/python改为/usr/bin/python2.7</p>
-
-
+<p>解决方案：urlgrabber-ext-down文件将/usr/bin/python改为/usr/bin/python2.7或#!/usr/bin/python2就可以了。</p>
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">vi /usr/libexec/urlgrabber-ext-down
 </div></code></pre>
@@ -220,21 +211,34 @@
 </div><div class="hljs-line">[root@localhost applications]<span class="hljs-comment"># vi /usr/bin/gnome-tweak-tool</span>
 </div></code></pre>
 
-<p>解决办法： gnome-tweak-tool 文件 #!/usr/bin/python换成 #!/usr/bin/python2.7 就可以了</p>
+<p>解决办法： gnome-tweak-tool 文件 #!/usr/bin/python换成 #!/usr/bin/python2.7或#!/usr/bin/python2就可以了。</p>
 
 <ul><li>yum-config-manager 文件同样出错</li>
 </ul>
-
-
 
 <pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@localhost kwplayer-master]<span class="hljs-comment"># whereis yum-config-manager</span>
 </div><div class="hljs-line">yum-config-manager: /usr/bin/yum-config-manager /usr/share/man/man1/yum-config-manager.1.gz
 </div><div class="hljs-line">[root@localhost kwplayer-master]<span class="hljs-comment"># vi /usr/bin/yum-config-manager</span>
 </div></code></pre>
 
-<p>解决办法同上：将/usr/bin/yum-config-manager文件中第一行 #!/usr/bin/python换成 #!/usr/bin/python2.7 就可以了</p>
+<p>解决办法同上：将/usr/bin/yum-config-manager文件中第一行 #!/usr/bin/python换成 #!/usr/bin/python2.7或#!/usr/bin/python2就可以了。</p>
 
+<ul><li>安装gitlib设置防火墙时，出现如下错误：</li>
+</ul>
 
+<pre class="prettyprint hljs-dark"><code class="language-bash hljs"><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># firewall-cmd –permanent –add-service=http</span>
+</div><div class="hljs-line">Traceback (most recent call last):
+</div><div class="hljs-line">  File <span class="hljs-string">"/bin/firewall-cmd"</span>, line 24, <span class="hljs-keyword">in</span> &lt;module&gt;
+</div><div class="hljs-line">    from gi.repository import GObject
+</div><div class="hljs-line">ModuleNotFoundError: No module named <span class="hljs-string">'gi'</span>
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># which firewall-cmd</span>
+</div><div class="hljs-line">/usr/bin/firewall-cmd
+</div><div class="hljs-line"><wbr>
+</div><div class="hljs-line">[root@devops-vm-0 ~]<span class="hljs-comment"># vi /usr/bin/firewall-cmd</span>
+</div></code></pre>
+
+<p>解决办法同上：将/usr/bin/firewall-cmd文件中第一行 #!/usr/bin/python换成 #!/usr/bin/python2.7或#!/usr/bin/python2就可以了。</p>
 
 <h1 id="4-参考地址">4. 参考地址</h1>
 
