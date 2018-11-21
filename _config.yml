@@ -4,12 +4,13 @@ header-img: "img/green.jpg"
 tagline: "cn"  
 description: "关于Go、Java、Linux、云计算"  # 一句话描述你的博客
 baseurl: ""
-url: "https://lishushan.github.io"  # 此处填写你的博客地址 
+#url: "https://lishushan.github.io"  # 此处填写你的博客地址
+url: "http://www.rockstack.cn"  # 此处填写你的博客地址
 
 # About/contact
 owner: 
   name: "李树山" # 填写作者信息：名字
-  email: null@qq.com # 填写作者信息：邮箱
+  email: about@qq.com # 填写作者信息：邮箱
   bio: "关于Go、Java、Linux、云计算" # 你的博客描述，填写作者信息：博客描述
 
 # Data
